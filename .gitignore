@@ -74,3 +74,5 @@ crashlytics-build.properties
 # Paid-for plugins
 /[Aa]ssets/[Pp]lugins/QFSW
 
+# Rider / JetBrains files
+.idea
