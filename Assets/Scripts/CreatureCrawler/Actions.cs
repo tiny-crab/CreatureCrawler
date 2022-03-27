@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CreatureCrawler {
@@ -20,7 +21,16 @@ namespace CreatureCrawler {
         ) {
             var newMon = Templates.mons[monTemplate]();
             newMon.Name = monName;
-            _state.mons.Add(newMon.Id, newMon);
+            _state.Mons.Add(newMon.Id, newMon);
+
+        }
+
+        public void SummonMon(
+            Guid monId,
+            int formationIndex,
+            int rowIndex
+        ) {
+            _state.Battlefield.AddToFormation(monId, formationIndex, rowIndex);
         }
     }
 }

@@ -9,8 +9,7 @@ namespace CreatureCrawler {
 
         public static Dictionary<MonTemplates, Func<Mon>> mons = new Dictionary<MonTemplates, Func<Mon>> {
             { MonTemplates.Charmander , () => new Mon {
-                Name = "Charmander",
-                Id = Guid.NewGuid(),
+                Template = MonTemplates.Charmander,
             }}
         };
     }
