@@ -22,6 +22,8 @@ namespace CreatureCrawler {
             Debug.Log("Commands component is initialized.");
         }
 
+        // Use this to spawn a new mon
+        // This will persist a mon instance throughout battles (part of the player's "inventory")
         [Command("spawn-mon")]
         public IEnumerator<ICommandAction> SpawnMonCommand(
             [MonTemplateSuggestorTag] string monTemplateName,
@@ -36,9 +38,11 @@ namespace CreatureCrawler {
             }
         }
 
+        // Use this to bring a mon instance from "inventory" to the actual battle space
+        // Needs a mon to be spawned already in order to summon a specific mon instance
         [Command("summon-mon")]
         public IEnumerator<ICommandAction> SummonMonCommand() {
-            var mons = _state.Mons.Values.ToDictionary(m => m.Name, m => m.Id);
+            var mons = _state.mons.Values.ToDictionary(m => m.name, m => m.id);
             if (mons.Count > 0) {
                 var selectedMonId = new Guid();
                 yield return new Choice<string>(mons.Keys, choice => {
@@ -63,10 +67,11 @@ namespace CreatureCrawler {
 
         }
 
+        // List all mon instances spawned so far
         [Command("list-mons")]
         public IEnumerator<ICommandAction> ListMonsCommand() {
-            foreach (var mon in _state.Mons.Values) {
-                yield return new Value($"{mon.Name}");
+            foreach (var mon in _state.mons.Values) {
+                yield return new Value($"{mon.name}");
             }
         }
     }

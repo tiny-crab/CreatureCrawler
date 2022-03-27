@@ -20,8 +20,8 @@ namespace CreatureCrawler {
             string monName
         ) {
             var newMon = Templates.mons[monTemplate]();
-            newMon.Name = monName;
-            _state.Mons.Add(newMon.Id, newMon);
+            newMon.name = monName;
+            _state.mons.Add(newMon.id, newMon);
 
         }
 
@@ -30,7 +30,8 @@ namespace CreatureCrawler {
             int formationIndex,
             int rowIndex
         ) {
-            _state.Battlefield.AddToFormation(monId, formationIndex, rowIndex);
+            _state.mons[monId].formationIndex = formationIndex;
+            _state.mons[monId].rowIndex = rowIndex;
         }
     }
 }
