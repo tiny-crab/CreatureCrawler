@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace CreatureCrawler {
@@ -6,7 +5,7 @@ namespace CreatureCrawler {
         // Generic
         public string name = "";
         public Templates.MonTemplates template;
-        public Guid id = Guid.NewGuid();
+        public string id = "";
 
         // Battles
         public int formationIndex;

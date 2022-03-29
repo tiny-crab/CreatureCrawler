@@ -4,7 +4,6 @@ using System.Linq;
 using CreatureCrawler.Suggestors;
 using QFSW.QC;
 using QFSW.QC.Actions;
-using UnityEditor.Experimental.TerrainAPI;
 using UnityEngine;
 
 namespace CreatureCrawler {
@@ -42,11 +41,11 @@ namespace CreatureCrawler {
         // Needs a mon to be spawned already in order to summon a specific mon instance
         [Command("summon-mon")]
         public IEnumerator<ICommandAction> SummonMonCommand() {
-            var mons = _state.mons.Values.ToDictionary(m => m.name, m => m.id);
+            var mons = _state.mons.Keys;
             if (mons.Count > 0) {
-                var selectedMonId = new Guid();
-                yield return new Choice<string>(mons.Keys, choice => {
-                    selectedMonId = mons[choice];
+                var selectedMonId = "";
+                yield return new Choice<string>(mons, choice => {
+                    selectedMonId = choice;
                 });
 
                 var selectedFormation = 0;
@@ -71,7 +70,19 @@ namespace CreatureCrawler {
         [Command("list-mons")]
         public IEnumerator<ICommandAction> ListMonsCommand() {
             foreach (var mon in _state.mons.Values) {
-                yield return new Value($"{mon.name}");
+                yield return new Value($"{mon.id}");
+            }
+        }
+
+        // Displays all values of a given mon in the console
+        [Command("get-mon")]
+        public void GetMonCommand([MonInstanceSuggestorTag] string monId) {
+            try {
+                var foundMon = _state.mons[monId];
+                Debug.Log(JsonUtility.ToJson(foundMon, true));
+            }
+            catch (Exception) {
+                // suppress error
             }
         }
     }

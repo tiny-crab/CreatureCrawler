@@ -21,12 +21,14 @@ namespace CreatureCrawler {
         ) {
             var newMon = Templates.mons[monTemplate]();
             newMon.name = monName;
+            newMon.id = monName
+                        + "-" + Enum.GetName(typeof(Templates.MonTemplates), newMon.template)
+                        + "-" + Guid.NewGuid().ToString().Substring(0, 8);
             _state.mons.Add(newMon.id, newMon);
-
         }
 
         public void SummonMon(
-            Guid monId,
+            string monId,
             int formationIndex,
             int rowIndex
         ) {
