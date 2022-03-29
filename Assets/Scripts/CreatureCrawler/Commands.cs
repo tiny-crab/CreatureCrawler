@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CreatureCrawler.Effects;
 using CreatureCrawler.Suggestors;
 using QFSW.QC;
 using QFSW.QC.Actions;
@@ -20,6 +21,14 @@ namespace CreatureCrawler {
             _state = GetComponent<State>();
             Debug.Log("Commands component is initialized.");
         }
+
+        //  __  __  ____  _   _  _____             _____                           _
+        // |  \/  |/ __ \| \ | |/ ____|           / ____|                         | |
+        // | \  / | |  | |  \| | (___    ______  | |  __  ___ _ __   ___ _ __ __ _| |
+        // | |\/| | |  | | . ` |\___ \  |______| | | |_ |/ _ \ '_ \ / _ \ '__/ _` | |
+        // | |  | | |__| | |\  |____) |          | |__| |  __/ | | |  __/ | | (_| | |
+        // |_|  |_|\____/|_| \_|_____/            \_____|\___|_| |_|\___|_|  \__,_|_|
+        //
 
         // Use this to spawn a new mon
         // This will persist a mon instance throughout battles (part of the player's "inventory")
@@ -84,6 +93,31 @@ namespace CreatureCrawler {
             catch (Exception) {
                 // suppress error
             }
+        }
+
+        //  __  __  ____  _   _  _____            ____        _   _   _
+        // |  \/  |/ __ \| \ | |/ ____|          |  _ \      | | | | | |
+        // | \  / | |  | |  \| | (___    ______  | |_) | __ _| |_| |_| | ___
+        // | |\/| | |  | | . ` |\___ \  |______| |  _ < / _` | __| __| |/ _ \
+        // | |  | | |__| | |\  |____) |          | |_) | (_| | |_| |_| |  __/
+        // |_|  |_|\____/|_| \_|_____/           |____/ \__,_|\__|\__|_|\___|
+
+        // Adds an effect to a mon - no strings attached
+        [Command("add-effect")]
+        public void AddEffectCommand(
+            [MonEffectTemplateSuggestorTag] string effectName,
+            [MonInstanceSuggestorTag] string ownerMonId,
+            [MonInstanceSuggestorTag] string targetMonId
+        ) {
+            var context = new MonEffectContext {
+                ownerMon = _state.mons[ownerMonId],
+                targetMon = _state.mons[targetMonId],
+                amount = 5,
+            };
+            var effect = new Damage {
+                context = context,
+            };
+            _state.battlefield.monEffectsQueue.Add(effect);
         }
     }
 }
