@@ -15,10 +15,17 @@ namespace CreatureCrawler.Effects {
         OnTurnEnd,
     }
 
+    public enum MonEffectDestroyTriggers {
+        OnApply,
+        OnAmountZero,
+    }
+
     [Serializable]
     public abstract class MonEffect {
-        public MonEffectContext context = null;
-        public List<MonEffectTriggers> triggers = new List<MonEffectTriggers>();
+        public MonEffectContext context { get; set; }
+        public bool destroyed { get; set; }
+        public List<MonEffectTriggers> triggers { get; set; }
+        public List<MonEffectDestroyTriggers> destroyTriggers { get; set; }
         public virtual void onTurnStart() {}
         public virtual void onApply() {}
         public virtual void onTurnEnd() {}

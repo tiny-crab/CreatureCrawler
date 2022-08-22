@@ -1,4 +1,5 @@
 using System;
+using CreatureCrawler.Effects;
 using UnityEngine;
 
 namespace CreatureCrawler {
@@ -34,6 +35,10 @@ namespace CreatureCrawler {
         ) {
             _state.mons[monId].formationIndex = formationIndex;
             _state.mons[monId].rowIndex = rowIndex;
+        }
+
+        public void ApplyEffect(MonEffect effect) {
+            _state.battlefield.applyEffect(effect);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CreatureCrawler.Effects;
+using CreatureCrawler.Skills;
 using CreatureCrawler.Suggestors;
 using QFSW.QC;
 using QFSW.QC.Actions;
@@ -102,7 +103,7 @@ namespace CreatureCrawler {
         // | |  | | |__| | |\  |____) |          | |_) | (_| | |_| |_| |  __/
         // |_|  |_|\____/|_| \_|_____/           |____/ \__,_|\__|\__|_|\___|
 
-        // Adds an effect to a mon - no strings attached
+        // Adds an effect to a mon and applied immediately - no strings attached
         [Command("add-effect")]
         public void AddEffectCommand(
             [MonEffectTemplateSuggestorTag] string effectName,
@@ -114,10 +115,8 @@ namespace CreatureCrawler {
                 targetMon = _state.mons[targetMonId],
                 amount = 5,
             };
-            var effect = new Damage {
-                context = context,
-            };
-            _state.battlefield.monEffectsQueue.Add(effect);
+            var effect = new DamageEffect { context = context };
+            _actions.ApplyEffect(effect);
         }
     }
 }
