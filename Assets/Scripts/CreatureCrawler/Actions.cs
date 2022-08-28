@@ -38,7 +38,7 @@ namespace CreatureCrawler {
         }
 
         public void ApplyEffect(MonEffect effect) {
-            _state.battlefield.applyEffect(effect);
+            _state.battlefieldLogic.applyEffect(effect);
         }
     }
 }
